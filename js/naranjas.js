@@ -1,5 +1,5 @@
 // Definizione di variabili globali
-let scene, camera, renderer, orange, building;
+let scene, camera, renderer, orange, mouseDown = false, initialMousePosition;
 
 // Funzione di inizializzazione della scena
 function init() {
@@ -19,7 +19,7 @@ function init() {
     // Creazione della costruzione
     const buildingGeometry = new THREE.BoxGeometry(1, 2, 1);
     const buildingMaterial = new THREE.MeshBasicMaterial({ color: 0xaaaaaa });
-    building = new THREE.Group();
+    const building = new THREE.Group();
     for (let i = 0; i < 5; i++) {
         const cube = new THREE.Mesh(buildingGeometry, buildingMaterial);
         cube.position.set((Math.random() - 0.5) * 5, 1, (Math.random() - 0.5) * 5);
@@ -38,9 +38,6 @@ function init() {
     camera.position.z = 10;
     camera.position.y = 5;
 
-    // Aggiunta di un controllo di orbita per muovere la telecamera
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
-
     // Aggiunta di un'illuminazione
     const light = new THREE.PointLight(0xffffff, 1, 100);
     light.position.set(0, 10, 0);
@@ -53,29 +50,67 @@ function init() {
     }
     animate();
 
-    // Gestione dell'evento di clic per "lanciare" la sfera
-    window.addEventListener('click', launchOrange);
+    // Gestione degli eventi del mouse
+    window.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('mousemove', onMouseMove);
+}
+
+// Funzione chiamata quando il mouse viene premuto sopra la sfera
+function onMouseDown(event) {
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    mouseDown = true;
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    const intersects = raycaster.intersectObjects([orange]);
+
+    if (intersects.length > 0) {
+        initialMousePosition = { x: event.clientX, y: event.clientY };
+    }
+}
+
+// Funzione chiamata quando il mouse viene rilasciato
+function onMouseUp() {
+    if (mouseDown) {
+        mouseDown = false;
+        const finalMousePosition = { x: event.clientX, y: event.clientY };
+        const velocity = calculateVelocity(initialMousePosition, finalMousePosition);
+        launchOrange(velocity);
+    }
+}
+
+// Funzione chiamata quando il mouse viene spostato
+function onMouseMove(event) {
+    if (mouseDown) {
+        const currentPosition = { x: event.clientX, y: event.clientY };
+        const distance = calculateDistance(initialMousePosition, currentPosition);
+        orange.position.z = distance * -0.1; // Sposta la sfera lungo l'asse z
+    }
+}
+
+// Funzione per calcolare la velocità del lancio in base alla distanza del trascinamento
+function calculateVelocity(initialPosition, finalPosition) {
+    const deltaX = finalPosition.x - initialPosition.x;
+    const deltaY = finalPosition.y - initialPosition.y;
+    const velocity = new THREE.Vector3(deltaX * 0.01, deltaY * 0.01, -10); // Imposta la velocità in base alla distanza del trascinamento
+    return velocity;
+}
+
+// Funzione per calcolare la distanza del trascinamento del mouse
+function calculateDistance(initialPosition, finalPosition) {
+    const deltaX = finalPosition.x - initialPosition.x;
+    return Math.sqrt(deltaX * deltaX);
 }
 
 // Funzione per "lanciare" la sfera
-function launchOrange() {
-    if (orange) {
-        const orangeVelocity = new THREE.Vector3(0, 0, -10); // Velocità di lancio
-        orange.position.add(orangeVelocity.clone().multiplyScalar(0.1)); // Avanza la sfera
-        checkCollision(); // Controlla se c'è stata una collisione
-    }
-}
-
-// Funzione per controllare la collisione tra la sfera e la costruzione
-function checkCollision() {
-    if (orange && building) {
-        const orangePosition = orange.position;
-        building.children.forEach(cube => {
-            if (orangePosition.distanceTo(cube.position) < 1.5) {
-                scene.remove(cube); // Rimuove il cubo colpito
-            }
-        });
-    }
+function launchOrange(velocity) {
+    orange.position.set(0, 1, 0);
+    orange.velocity = velocity;
 }
 
 // Chiamata alla funzione di inizializzazione quando il documento è pronto
