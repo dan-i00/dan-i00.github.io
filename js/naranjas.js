@@ -1,5 +1,5 @@
 // Definizione di variabili globali
-let scene, camera, renderer, orange, mouseDown = false, initialMousePosition;
+let scene, camera, renderer, orange, mouseDown = false, initialMousePosition, initialOrangePosition;
 
 // Funzione di inizializzazione della scena
 function init() {
@@ -12,7 +12,7 @@ function init() {
 
     // Creazione del terreno
     const groundGeometry = new THREE.BoxGeometry(20, 1, 20);
-    const groundMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+    const groundMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     const ground = new THREE.Mesh(groundGeometry, groundMaterial);
     scene.add(ground);
 
@@ -71,6 +71,7 @@ function onMouseDown(event) {
 
     if (intersects.length > 0) {
         initialMousePosition = { x: event.clientX, y: event.clientY };
+        initialOrangePosition = orange.position.clone(); // Salva la posizione iniziale della sfera
     }
 }
 
@@ -89,7 +90,7 @@ function onMouseMove(event) {
     if (mouseDown) {
         const currentPosition = { x: event.clientX, y: event.clientY };
         const distance = calculateDistance(initialMousePosition, currentPosition);
-        orange.position.z = distance * -0.1; // Sposta la sfera lungo l'asse z
+        orange.position.z = initialOrangePosition.z - distance * 0.1; // Sposta la sfera lungo l'asse z
     }
 }
 
