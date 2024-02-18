@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF8">
+		<title>Angry Birds</title>
+		<style>
+			body {
+				width: 100%;
+				text-align: center;
+				overflow: hidden;
+			}
+
+			canvas {
+				display: inline;
+				background: url(images/background.jpg) no-repeat;
+				-moz-background-size: 100% 600px; /* Firefox 3.6+ */
+				-webkit-background-size: 100% 600px; /* Safari 3.1+ и Chrome 4.0+ */
+				-o-background-size: 100% 600px; /* Opera 9.6+ */
+				background-size: 100% 600px;
+			}
+		</style>
+		<script src="js/Box2dWeb-2.1.a.3.min.js"></script>
+		<script src="js/boxbox.min.js"></script>
+		<script src="js/jquery-2.2.3.min.js"></script>
+	</head>
+	<body>
+		<canvas id="game" width=1000 height=600 style="border: 1px solid black;">
+			Ваш браузер не підтримує canvas
+		</canvas>
+		<script src="js/game.js"></script>
+	</body>
+</html>
