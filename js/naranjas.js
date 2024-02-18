@@ -16,22 +16,12 @@ function init() {
     const ground = new THREE.Mesh(geometry, material);
     scene.add(ground);
 
-    // Caricamento dell'arancia
-    const orangeLoader = new THREE.OBJLoader();
-    orangeLoader.load(
-        'path_to_orange_model.obj',
-        function (orangeModel) {
-            orange = orangeModel;
-            orange.position.set(0, 1, 0);
-            scene.add(orange);
-        },
-        function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% caricato');
-        },
-        function (error) {
-            console.error('Errore nel caricamento dell\'arancia', error);
-        }
-    );
+    // Creazione della sfera arancia
+    const orangeGeometry = new THREE.SphereGeometry(1, 32, 32);
+    const orangeMaterial = new THREE.MeshBasicMaterial({ color: 0xffa500 });
+    orange = new THREE.Mesh(orangeGeometry, orangeMaterial);
+    orange.position.set(0, 1, 0);
+    scene.add(orange);
 
     // Impostazione della posizione della telecamera
     camera.position.z = 5;
@@ -50,16 +40,6 @@ function init() {
         renderer.render(scene, camera);
     }
     animate();
-}
-
-// Funzione per gestire il lancio dell'arancia
-function launchOrange() {
-    if (orange) {
-        // Imposta la velocità e la direzione di lancio dell'arancia
-        const velocity = new THREE.Vector3(0, 0, -5); // Esempio: lancia in avanti con velocità -5 lungo l'asse z
-        const timeDelta = 1 / 60; // Delta tempo per la simulazione (esempio: 60 fps)
-        orange.position.add(velocity.clone().multiplyScalar(timeDelta));
-    }
 }
 
 // Chiamata alla funzione di inizializzazione quando il documento è pronto
