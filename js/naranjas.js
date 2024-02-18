@@ -12,7 +12,7 @@ function init() {
 
     // Creazione del terreno
     const groundGeometry = new THREE.BoxGeometry(20, 1, 20);
-    const groundMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const groundMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
     const ground = new THREE.Mesh(groundGeometry, groundMaterial);
     scene.add(ground);
 
