@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>cannon.js + three.js - voxel shooter</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <style>
+      #instructions {
+        position: fixed;
+        left: 0;
+        top: 0;
+
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #ffffff;
+        text-align: center;
+
+        cursor: pointer;
+      }
+      #instructions span {
+        font-size: 40px;
+      }
+
+      #timer{
+        position: fixed;
+        top: 10%;
+        left: 10%;
+        padding: 5px 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+        font-size: 35px;
+        border-radius: 15px;
+        border: 2px solid white; /* Añadir bordes */
+      }
+
+      #Estadisticas{
+        position: fixed;
+        top: 20%;
+        left: 5%;
+        padding: 5px 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+        border-radius: 5px;
+        border: 2px solid white; /* Añadir bordes */
+      }
+    </style>
+    <script type="module">
+      //import { addTitle, addSourceButton } from './js/dom-utils.js'
+
+      //addTitle()
+      //addSourceButton()
+    </script>
+  </head>
+  <body>
+    <div id="Estadisticas"></div>
+    <div id="timer">00:00</div>
+    <div id="instructions">
+      <span>Nivel 1 <br/> Click to play</span>
+      <br />
+      (W,A,S,D = Move, SPACE = Jump, MOUSE = Look, CLICK = Shoot)
+    </div>
+
+    <script type="module" src="js/progetto.js"></script>
+    
+  </body>
+</html>

@@ -148,8 +148,8 @@ function animate(event)
     if( intersecciones.length > 0 ){
         new TWEEN.Tween( soldado.position ).
         to( {x:[0,0],y:[3,1],z:[0,0]}, 2000 ).
-        interpolation( TWEEN.Interpolation.Bezier ).
-        easing( TWEEN.Easing.Bounce.Out ).
+        interpolation( TWEEN.Interpolation.Bezier ). //non arriva a 3, usa bezier per approssimare
+        easing( TWEEN.Easing.Bounce.Out ). //rimbalza
         start();
     }
 
