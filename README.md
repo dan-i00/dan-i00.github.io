@@ -10,7 +10,7 @@
 
 ## Bibliografía
 
-Para la gestión del movimiento del jugador en primera persona, nos hemos inspirado en el proyecto [Cannon.js Voxel First Person Shooter](https://github.com/pmndrs/cannon-es/blob/master/examples/threejs_voxel_fps.html) en GitHub.
+Para la gestión del movimiento del jugador en primera persona, me he inspirado en el proyecto [Cannon.js Voxel First Person Shooter](https://github.com/pmndrs/cannon-es/blob/master/examples/threejs_voxel_fps.html) en GitHub.
 
 ## Objetivo
 
